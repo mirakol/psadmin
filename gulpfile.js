@@ -15,6 +15,7 @@ var config = {
     paths: {
         html: './src/*.html',
         js: './src/**/*.js',
+        images: './src/images/*',
         css: [
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
             'node_modules/bootstrap/dist/css/bootstrap-theme.min.css'
@@ -47,7 +48,7 @@ gulp.task('html', function() {
     .pipe(connect.reload());                //reload after the tast is done
 });
 
-//TAsk to deal with javascript. Transform to JSX to JS, bundle al lJS files in to one, 
+//Task to deal with javascript. Transform to JSX to JS, bundle al lJS files in to one, 
 //throw error if there is a problem and pipe the result to the bundle file called bundle.js and point it to the bundle destination
 gulp.task('js', function() {
     browserify(config.paths.mainJs)
@@ -65,6 +66,16 @@ gulp.task('css', function() {
 		.pipe(gulp.dest(config.paths.dist + '/css'));
 });
 
+//Migrates images to dist folder
+gulp.task('images', function() {
+    gulp.src(config.paths.images)
+    .pipe(gulp.dest(config.paths.dist + '/images'))
+    .pipe(connect.reload());
+    //Publishes the favicon
+    gulp.src('./src/favicon.ico')
+    .pipe(gulp.dest(config.paths.dist));
+});
+
 gulp.task('lint', function() {
 	return gulp.src(config.paths.js)
 		.pipe(lint({config: 'eslint.config.json'}))
@@ -77,4 +88,4 @@ gulp.task('watch', function() {
 });
 
 //Default task for ease. Takes array of tasks to run by default
-gulp.task('default', ['html', 'js', 'lint', 'css', 'open', 'watch']);
+gulp.task('default', ['html', 'js', 'lint', 'css', 'images', 'open', 'watch']);
