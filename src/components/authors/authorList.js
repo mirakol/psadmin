@@ -3,6 +3,10 @@
 var React = require('react');
 
 var AuthorList = React.createClass({
+    //propTypes is a good way to delace what kind of type is expected to be passed, i.e. string, number, object, array
+    propTypes: {
+        authors: React.PropTypes.array.isRequired        
+    },
     render: function() {
 		var createAuthorRow = function(author) {
 			return (

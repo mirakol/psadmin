@@ -47354,6 +47354,10 @@ module.exports = About;
 var React = require('react');
 
 var AuthorList = React.createClass({displayName: "AuthorList",
+    //propTypes is a good way to delace what kind of type is expected to be passed, i.e. string, number, object, array
+    propTypes: {
+        authors: React.PropTypes.array.isRequired        
+    },
     render: function() {
 		var createAuthorRow = function(author) {
 			return (
@@ -47382,12 +47386,13 @@ var AuthorList = React.createClass({displayName: "AuthorList",
 module.exports = AuthorList;
 },{"react":158}],163:[function(require,module,exports){
 "use strict";
-
+//This file serves as Controller View - a smart component that passes data down via props
 var React = require('react');
 var AuthorApi = require('../../api/authorApi');
 var AuthorList = require('./authorList');
 
-var Authors = React.createClass({displayName: "Authors",
+var AuthorPage = React.createClass({displayName: "AuthorPage",
+
     getInitialState: function() {
         return {
             authors: []
@@ -47410,7 +47415,7 @@ var Authors = React.createClass({displayName: "Authors",
     }
 });
 
-module.exports = Authors;
+module.exports = AuthorPage;
 },{"../../api/authorApi":159,"./authorList":162,"react":158}],164:[function(require,module,exports){
 "use strict";
 
