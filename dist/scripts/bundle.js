@@ -50281,6 +50281,22 @@ module.exports = {
 var React = require('react');
 
 var About = React.createClass({displayName: "About",
+	statics: {
+		willTransitionTo: function(transition, params, query, callback) {
+			if(!confirm('Are sure you want to read a page?')) {
+				transition.about();
+			} else {
+				callback();
+			}
+		},
+
+		willTransitionFrom: function(transition, component) {
+			if(!confirm('Are you really sure you want to leave this page?')) {
+				transition.about();
+			} 
+		}
+	},
+
 	render: function () {
 		return (
 			React.createElement("div", null, 
@@ -50473,7 +50489,7 @@ var React = require('react');
 var Router = require('react-router');
 var routes = require('./routes');
 
-Router.run(routes, function(Handler) {
+Router.run(routes, Router.HistoryLocation, function(Handler) {
 	React.render(React.createElement(Handler, null), document.getElementById('app'));
 });
 
