@@ -50363,6 +50363,7 @@ var AuthorList = React.createClass({displayName: "AuthorList",
 });
 
 module.exports = AuthorList;
+
 },{"react":197}],203:[function(require,module,exports){
 "use strict";
 //This file serves as Controller View - a smart component that passes data down via props
@@ -50395,6 +50396,7 @@ var AuthorPage = React.createClass({displayName: "AuthorPage",
 });
 
 module.exports = AuthorPage;
+
 },{"../../api/authorApi":198,"./authorList":202,"react":197}],204:[function(require,module,exports){
 "use strict";
 
@@ -50422,6 +50424,7 @@ var Header = React.createClass({displayName: "Header",
 });
 
 module.exports = Header;
+
 },{"react":197,"react-router":28}],205:[function(require,module,exports){
 "use strict";
 
@@ -50473,6 +50476,7 @@ var routes = require('./routes');
 Router.run(routes, function(Handler) {
 	React.render(React.createElement(Handler, null), document.getElementById('app'));
 });
+
 },{"./routes":208,"react":197,"react-router":28}],208:[function(require,module,exports){
 "use strict";
 
@@ -50496,4 +50500,5 @@ var routes = (
 );
 
 module.exports = routes;
+
 },{"./components/about/aboutPage":200,"./components/app":201,"./components/authors/authorPage":203,"./components/homePage":205,"./components/notFoundPage":206,"react":197,"react-router":28}]},{},[207]);
