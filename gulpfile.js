@@ -18,9 +18,8 @@ var config = {
 		images: './src/images/*',
 		css: [
       		'node_modules/bootstrap/dist/css/bootstrap.min.css',
-			  'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
-			  'node_modules/toastr/toastr.css'
-			  
+      		'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
+      		'node_modules/toastr/toastr.css'
     	],
 		dist: './dist',
 		mainJs: './src/main.js'
@@ -39,7 +38,7 @@ gulp.task('connect', function() {
 
 gulp.task('open', ['connect'], function() {
 	gulp.src('dist/index.html')
-		.pipe(open('', { url: config.devBaseUrl + ':' + config.port + '/'}));
+		.pipe(open({ uri: config.devBaseUrl + ':' + config.port + '/'}));
 });
 
 gulp.task('html', function() {
