@@ -51339,14 +51339,14 @@ var ActionTypes = require('../constants/actionTypes');
 var AuthorApi = require('../api/authorApi');
 
 var InitializeActions = {
-    initApp: function() {
-        Dispatcher.dispatch({
-            actionType: ActionTypes.INITIALIZE,
-            initialData: {
-                authors: AuthorApi.getAllAuthors()
-            }
-        });
-    }
+	initApp: function() {
+		Dispatcher.dispatch({
+			actionType: ActionTypes.INITIALIZE,
+			initialData: {
+				authors: AuthorApi.getAllAuthors()
+			}
+		});
+	}
 };
 
 module.exports = InitializeActions;
@@ -51389,10 +51389,10 @@ var AuthorApi = {
 			//The server would generate ids for new authors in a real app.
 			//Cloning so copy returned is passed by value rather than by reference.
 			author.id = _generateId(author);
-			authors.push(_clone(author));
+			authors.push(author);
 		}
 
-		return author;
+		return _clone(author);
 	},
 
 	deleteAuthor: function(id) {
@@ -51433,20 +51433,19 @@ var React = require('react');
 var About = React.createClass({displayName: "About",
 	statics: {
 		willTransitionTo: function(transition, params, query, callback) {
-			if(!confirm('Are sure you want to read a page?')) {
+			if (!confirm('Are you sure you want to read a page that\'s this boring?')) {
 				transition.about();
 			} else {
 				callback();
 			}
 		},
-
+		
 		willTransitionFrom: function(transition, component) {
-			if(!confirm('Are you really sure you want to leave this page?')) {
+			if (!confirm('Are you sure you want to leave a page that\'s this exciting?')) {
 				transition.about();
-			} 
+			}
 		}
 	},
-
 	render: function () {
 		return (
 			React.createElement("div", null, 
@@ -51505,7 +51504,7 @@ var AuthorForm = React.createClass({displayName: "AuthorForm",
 		onSave:	React.PropTypes.func.isRequired,
 		onChange: React.PropTypes.func.isRequired,
 		errors: React.PropTypes.object
-    }, 
+	},
 
 	render: function() {
 		return (
@@ -51738,8 +51737,8 @@ var Header = React.createClass({displayName: "Header",
               ), 
               React.createElement("ul", {className: "nav navbar-nav"}, 
                 React.createElement("li", null, React.createElement(Link, {to: "app"}, "Home")), 
-                React.createElement("li", null, React.createElement(Link, {to: "/authors"}, "Authors")), 
-                React.createElement("li", null, React.createElement(Link, {to: "/about"}, "About"))
+                React.createElement("li", null, React.createElement(Link, {to: "authors"}, "Authors")), 
+                React.createElement("li", null, React.createElement(Link, {to: "about"}, "About"))
               )
           )
         )
@@ -51748,7 +51747,6 @@ var Header = React.createClass({displayName: "Header",
 });
 
 module.exports = Header;
-
 },{"react":202,"react-router":33}],215:[function(require,module,exports){
 "use strict";
 
@@ -51798,15 +51796,15 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 var Home = React.createClass({displayName: "Home",
-    render: function() {
-        return (
-            React.createElement("div", {className: "jumbotron"}, 
-                React.createElement("h1", null, "Pluralsight Administration"), 
-                React.createElement("p", null, "React, React Router, and Flux for ultra-responsive web apps"), 
-                React.createElement(Link, {to: "about", className: "btn btn-primary btn-lg"}, "Learn more")
-            )
-        );
-    }
+	render: function() {
+		return (
+			React.createElement("div", {className: "jumbotron"}, 
+				React.createElement("h1", null, "Pluralsight Administration"), 
+				React.createElement("p", null, "React, React Router, and Flux for ultra-responsive web apps."), 
+				React.createElement(Link, {to: "about", className: "btn btn-primary btn-lg"}, "Learn more")
+			)
+		);
+	}
 });
 
 module.exports = Home;
@@ -51834,16 +51832,29 @@ module.exports = NotFoundPage;
 },{"react":202,"react-router":33}],218:[function(require,module,exports){
 "use strict";
 
-var keyMirror = require('react/lib/keyMirror'); //copies the key to the value so we do not have ty type it every time
+var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
-    INITIALIZE: null,    
-    CREATE_AUTHOR: null,
-    UPDATE_AUTHOR: null,
-    DELETE_AUTHOR: null
+	INITIALIZE: null,
+	CREATE_AUTHOR: null,
+	UPDATE_AUTHOR: null,
+	DELETE_AUTHOR: null
 });
 
 },{"react/lib/keyMirror":187}],219:[function(require,module,exports){
+/*
+ * Copyright (c) 2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * AppDispatcher
+ *
+ * A singleton that operates as the central hub for application updates.
+ */
+
 var Dispatcher = require('flux').Dispatcher;
 
 module.exports = new Dispatcher();
@@ -51858,10 +51869,9 @@ var InitializeActions = require('./actions/initializeActions');
 
 InitializeActions.initApp();
 
-Router.run(routes, Router.HistoryLocation, function(Handler) {
+Router.run(routes, function(Handler) {
 	React.render(React.createElement(Handler, null), document.getElementById('app'));
 });
-
 },{"./actions/initializeActions":205,"./routes":221,"react":202,"react-router":33}],221:[function(require,module,exports){
 "use strict";
 
